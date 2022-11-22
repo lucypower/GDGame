@@ -4,18 +4,23 @@ using UnityEngine;
 
 public class PlantGrowing : MonoBehaviour
 {
-    public GameObject m_seed;
     public GameObject[] m_growthStages;
+
     public float m_growthTime;
+    private int m_stageCount;
+    
+    private bool m_canGrow;
+    private bool m_noActive = true;
+    
     private IEnumerator m_coroutine;
     private GrowthStage m_gStage;
-    private int m_stageCount;
-    private bool m_canGrow;
 
+    public Score m_score;
 
     private void Start()
     {
         m_canGrow = true;
+        m_score = GetComponent<Score>();
     }
 
     private IEnumerator PlantGrowthDelay()
@@ -35,17 +40,6 @@ public class PlantGrowing : MonoBehaviour
         m_coroutine = PlantGrowthDelay();
         StartCoroutine(m_coroutine);
         m_canGrow = false;
-
-        //if (m_seed.active)
-        //{
-        //    StartCoroutine(m_coroutine);
-
-        //    if (m_coroutine == null)
-        //    {
-        //        m_seed.SetActive(false);
-        //        m_growthStages[0].SetActive(true);
-        //    }
-        //}
     }
 
 
@@ -53,21 +47,25 @@ public class PlantGrowing : MonoBehaviour
     {
         switch (m_gStage)
         {
-            case GrowthStage.SEED:
-            
-                // need to stop it growing to seedling straight away 
+            case GrowthStage.EMPTY:
 
                 if (m_growthStages[0].activeInHierarchy)
-                {                    
-                    if (m_canGrow)
-                    {
-                        m_stageCount = 0;
+                {
+                    m_gStage = GrowthStage.SEED;
+                }
 
-                        Growing();
+                break;
 
-                        m_gStage = GrowthStage.SEEDLING;
-                    }
-                }               
+            case GrowthStage.SEED:
+                              
+                if (m_canGrow)
+                {
+                    m_stageCount = 0;
+
+                    Growing();
+
+                    m_gStage = GrowthStage.SEEDLING;
+                }          
 
                 break;
 
@@ -84,7 +82,7 @@ public class PlantGrowing : MonoBehaviour
 
                 break;
 
-            case GrowthStage.CROP:                               
+            case GrowthStage.CROP:
 
                 break;
 
@@ -93,9 +91,48 @@ public class PlantGrowing : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        for (int i = 0; i < m_growthStages.Length; i++)
+        {
+            if (m_growthStages[i].activeInHierarchy)
+            {
+                m_noActive = false;
+                break;
+            }
+            else
+            {
+                m_noActive = true;
+            }
+        }
+
+        if (m_noActive)
+        {
+            if (Input.GetKey(KeyCode.Space) && collision.CompareTag("Player"))
+            {
+                m_growthStages[0].SetActive(true);
+                m_gStage = GrowthStage.SEED;
+
+                m_coroutine = PlantGrowthDelay();
+                StartCoroutine(m_coroutine);
+                m_canGrow = false;
+            }
+        }
+
+        if (m_growthStages[2].activeInHierarchy)
+        {
+            if(Input.GetKey(KeyCode.Return) && collision.CompareTag("Player"))
+            {
+                m_growthStages[2].SetActive(false);
+                m_score.AddScore(100);
+                //m_gStage = GrowthStage.EMPTY;
+            }
+        }        
+    }
 
     private enum GrowthStage
     {
+        EMPTY,
         SEED,
         SEEDLING,
         CROP
