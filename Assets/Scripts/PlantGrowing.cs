@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlantGrowing : MonoBehaviour
@@ -15,12 +16,16 @@ public class PlantGrowing : MonoBehaviour
     private IEnumerator m_coroutine;
     private GrowthStage m_gStage;
 
-    public Score m_score;
+    Inventory m_inventory;
+
+    private void Awake()
+    {
+        m_inventory = GameObject.Find("Player").GetComponent<Inventory>();
+    }
 
     private void Start()
     {
         m_canGrow = true;
-        m_score = GetComponent<Score>();
     }
 
     private IEnumerator PlantGrowthDelay()
@@ -42,20 +47,10 @@ public class PlantGrowing : MonoBehaviour
         m_canGrow = false;
     }
 
-
     private void Update()
     {
         switch (m_gStage)
         {
-            case GrowthStage.EMPTY:
-
-                if (m_growthStages[0].activeInHierarchy)
-                {
-                    m_gStage = GrowthStage.SEED;
-                }
-
-                break;
-
             case GrowthStage.SEED:
                               
                 if (m_canGrow)
@@ -106,12 +101,13 @@ public class PlantGrowing : MonoBehaviour
             }
         }
 
-        if (m_noActive)
+        if (m_noActive && m_inventory.m_seedCount > 0)
         {
             if (Input.GetKey(KeyCode.Space) && collision.CompareTag("Player"))
             {
                 m_growthStages[0].SetActive(true);
                 m_gStage = GrowthStage.SEED;
+                m_inventory.m_seedCount--;
 
                 m_coroutine = PlantGrowthDelay();
                 StartCoroutine(m_coroutine);
@@ -124,7 +120,7 @@ public class PlantGrowing : MonoBehaviour
             if(Input.GetKey(KeyCode.Return) && collision.CompareTag("Player"))
             {
                 m_growthStages[2].SetActive(false);
-                m_score.AddScore(100);
+                m_inventory.m_cropCount++;
                 //m_gStage = GrowthStage.EMPTY;
             }
         }        

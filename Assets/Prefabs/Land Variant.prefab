@@ -60,6 +60,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8606420327288871309, guid: 1a0995756d9eb11489ef208a299328ae, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8606420327288871309, guid: 1a0995756d9eb11489ef208a299328ae, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -791376325
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a0995756d9eb11489ef208a299328ae, type: 3}
@@ -88,6 +96,14 @@ PrefabInstance:
     - target: {fileID: 1429337194943312986, guid: 985a03ef2d62eb6459cea8edaf6be9f1, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1433030098680539338, guid: 985a03ef2d62eb6459cea8edaf6be9f1, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1433030098680539338, guid: 985a03ef2d62eb6459cea8edaf6be9f1, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -791376325
       objectReference: {fileID: 0}
     - target: {fileID: 9181940057968348937, guid: 985a03ef2d62eb6459cea8edaf6be9f1, type: 3}
       propertyPath: m_RootOrder
@@ -262,7 +278,7 @@ MonoBehaviour:
   - {fileID: 758375346639671053}
   - {fileID: 449303492613778822}
   m_growthTime: 3
-  m_score: {fileID: 0}
+  m_player: {fileID: 0}
 --- !u!4 &4153191120724026701 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1866294152961125233, guid: b49cb386e8b185a4e9048cb2816c2d60, type: 3}
@@ -327,6 +343,14 @@ PrefabInstance:
     - target: {fileID: 6745341895794852641, guid: 71b2051e533bdad45824b99855de453d, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7523603823845626743, guid: 71b2051e533bdad45824b99855de453d, type: 3}
+      propertyPath: m_SortingLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7523603823845626743, guid: 71b2051e533bdad45824b99855de453d, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -791376325
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
