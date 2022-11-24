@@ -17,10 +17,12 @@ public class PlantGrowing : MonoBehaviour
     private GrowthStage m_gStage;
 
     Inventory m_inventory;
+    InventoryHotbar m_inventoryHotbar;
 
     private void Awake()
     {
         m_inventory = GameObject.Find("Player").GetComponent<Inventory>();
+        m_inventoryHotbar = GameObject.Find("Player").GetComponent<InventoryHotbar>();
     }
 
     private void Start()
@@ -101,7 +103,7 @@ public class PlantGrowing : MonoBehaviour
             }
         }
 
-        if (m_noActive && m_inventory.m_seedCount > 0)
+        if (m_noActive && m_inventory.m_seedCount > 0 && m_inventoryHotbar.m_inventoryNoSelected == 1)
         {
             if (Input.GetKey(KeyCode.Space) && collision.CompareTag("Player"))
             {

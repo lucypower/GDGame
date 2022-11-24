@@ -18,8 +18,8 @@ public class Inventory : MonoBehaviour
     private void Update()
     {
         m_goldCounter.text = "Gold : " + m_gold;
-        m_seedCounter.text = "Seeds : " + m_seedCount;
-        m_cropCounter.text = "Crops : " + m_cropCount;
+        m_seedCounter.text = m_seedCount.ToString();
+        m_cropCounter.text = m_cropCount.ToString();
         m_scoreCounter.text = "Score : " + m_score;
     }
 }
