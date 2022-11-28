@@ -9,7 +9,8 @@ public class PlantGrowing : MonoBehaviour
 
     public float m_growthTime;
     private int m_stageCount;
-    
+    public float m_timeToWater;
+
     private bool m_canGrow;
     private bool m_noActive = true;
     
@@ -18,11 +19,14 @@ public class PlantGrowing : MonoBehaviour
 
     Inventory m_inventory;
     InventoryHotbar m_inventoryHotbar;
+    PlantWilting m_plantWilting;
+
 
     private void Awake()
     {
         m_inventory = GameObject.Find("Player").GetComponent<Inventory>();
         m_inventoryHotbar = GameObject.Find("Player").GetComponent<InventoryHotbar>();
+        m_plantWilting = GetComponent<PlantWilting>();
     }
 
     private void Start()
@@ -70,12 +74,29 @@ public class PlantGrowing : MonoBehaviour
 
                 if (m_canGrow)
                 {
-                    m_stageCount++;
+                    RandomValue();
 
-                    Growing();
+                    if (m_plantWilting.m_isWilted)
+                    {
+                        if (m_timeToWater > 0)
+                        {
+                            m_timeToWater -= Time.deltaTime;
+                        }
+                        else
+                        {
+                            m_growthStages[m_stageCount].SetActive(false);
+                        }
+                    }
 
-                    m_gStage = GrowthStage.CROP;
-                }
+                    if (m_canGrow && !m_plantWilting.m_isWilted)
+                    {
+                        m_stageCount++;
+
+                        Growing();
+
+                        m_gStage = GrowthStage.CROP;
+                    }
+                }                
 
                 break;
 
@@ -125,7 +146,29 @@ public class PlantGrowing : MonoBehaviour
                 m_inventory.m_cropCount++;
                 //m_gStage = GrowthStage.EMPTY;
             }
-        }        
+        }   
+        
+        if (m_plantWilting.m_isWilted && m_inventoryHotbar.m_inventoryNoSelected == 3)
+        {
+            if (Input.GetKey(KeyCode.Return) && collision.CompareTag("Player"))
+            {
+                m_plantWilting.PlantWatered();
+
+                m_coroutine = PlantGrowthDelay();
+                StartCoroutine(m_coroutine);
+                m_canGrow = false;
+            }
+        }
+    }
+
+    public void RandomValue()
+    {
+        float random = Random.value;
+
+        if (random <= 0.25f)
+        {
+            m_plantWilting.PlantWilted();
+        }
     }
 
     private enum GrowthStage
