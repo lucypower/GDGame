@@ -9,16 +9,10 @@ public class GameplayTimer : MonoBehaviour
     [HideInInspector] public float m_timedTime = 300;
     public TMP_Text m_textCounter;
 
-    GamemodeMenu m_gamemode;
-
-    private void Awake()
-    {
-        m_gamemode = GameObject.Find("GameplayMenu").GetComponent<GamemodeMenu>();
-    }
 
     private void Update()
     {
-        if (m_gamemode.m_arcade)
+        if (GamemodeMenu.m_arcade)
         {
             if (m_arcadeTime > 0)
             {
@@ -32,7 +26,7 @@ public class GameplayTimer : MonoBehaviour
             }
         }
 
-        if (m_gamemode.m_timed)
+        if (GamemodeMenu.m_timed)
         {
             if (m_timedTime > 0)
             {
