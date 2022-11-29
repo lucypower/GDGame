@@ -5,8 +5,23 @@ using UnityEngine.SceneManagement;
 
 public class GamemodeMenu : MonoBehaviour
 {
+    public bool m_arcade = false;
+    public bool m_timed = false;    
+
     public void StartGame()
     {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+    
+    public void StartArcadeGame()
+    {
+        m_arcade = true;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+    
+    public void StartTimedGame()
+    {
+        m_timed = true;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

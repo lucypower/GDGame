@@ -8,6 +8,13 @@ public class PlantWilting : MonoBehaviour
     public GameObject m_wiltedSeedling;
     public GameObject m_seedling;
 
+    Inventory m_inventory;
+
+    private void Awake()
+    {
+        m_inventory = GameObject.Find("Player").GetComponent<Inventory>();
+    }
+
     private void Start()
     {
         m_isWilted = false;
@@ -23,6 +30,14 @@ public class PlantWilting : MonoBehaviour
     public void PlantWatered()
     {
         m_seedling.SetActive(true);
+        m_wiltedSeedling.SetActive(false);
+        m_isWilted = false;
+
+        m_inventory.m_score += 50;
+    }
+
+    public void PlantDead()
+    {
         m_wiltedSeedling.SetActive(false);
         m_isWilted = false;
     }
