@@ -11,6 +11,7 @@ public class PlantGrowing : MonoBehaviour
     private int m_stageCount;
     public float m_timeToWater;
 
+    private bool m_timerReset = false;
     private bool m_canGrow;
     private bool m_noActive = true;
     
@@ -20,7 +21,7 @@ public class PlantGrowing : MonoBehaviour
     Inventory m_inventory;
     InventoryHotbar m_inventoryHotbar;
     PlantWilting m_plantWilting;
-
+    
 
     private void Awake()
     {
@@ -41,6 +42,11 @@ public class PlantGrowing : MonoBehaviour
         m_canGrow = true;
     }
 
+    private IEnumerator PlantWaterTimer()
+    {
+        yield return new WaitForSeconds(m_timeToWater);
+    }
+
     public void Growing()
     {
         Debug.Log("Growing");
@@ -57,6 +63,13 @@ public class PlantGrowing : MonoBehaviour
     {
         switch (m_gStage)
         {
+            case GrowthStage.EMPTY:
+
+                m_plantWilting.m_isWilted = false;
+                m_timerReset = false;
+
+                break;
+
             case GrowthStage.SEED:
                               
                 if (m_canGrow)
@@ -78,18 +91,24 @@ public class PlantGrowing : MonoBehaviour
 
                     if (m_plantWilting.m_isWilted)
                     {
+                        if (!m_timerReset)
+                        {
+                            ResetTimer();
+                        }
+
                         if (m_timeToWater > 0)
                         {
                             m_timeToWater -= Time.deltaTime;
                         }
                         else
                         {
-                            m_growthStages[m_stageCount].SetActive(false);
+                            m_growthStages[3].SetActive(false);
+                            m_gStage = GrowthStage.EMPTY;                       
                         }
                     }
 
                     if (m_canGrow && !m_plantWilting.m_isWilted)
-                    {
+                    {      
                         m_stageCount++;
 
                         Growing();
@@ -140,7 +159,7 @@ public class PlantGrowing : MonoBehaviour
 
         if (m_growthStages[2].activeInHierarchy)
         {
-            if(Input.GetKey(KeyCode.Return) && collision.CompareTag("Player"))
+            if(Input.GetKey(KeyCode.Return) && collision.CompareTag("Player") && m_inventoryHotbar.m_inventoryNoSelected == 4)
             {
                 m_growthStages[2].SetActive(false);
                 m_inventory.m_cropCount++;
@@ -169,6 +188,12 @@ public class PlantGrowing : MonoBehaviour
         {
             m_plantWilting.PlantWilted();
         }
+    }
+
+    public void ResetTimer()
+    {
+        m_timeToWater = 3;
+        m_timerReset = true;
     }
 
     private enum GrowthStage
