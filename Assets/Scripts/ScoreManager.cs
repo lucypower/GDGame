@@ -6,10 +6,12 @@ using System.Linq;
 
 public class ScoreManager : MonoBehaviour
 {
-    private ScoreData m_scores;
+    public ScoreData m_scores;
 
     private void Awake()
     {
+        DontDestroyOnLoad(transform.root);
+
         var json = PlayerPrefs.GetString("scores", "{}");
         m_scores = JsonUtility.FromJson<ScoreData>(json);
         //m_scores = new ScoreData();

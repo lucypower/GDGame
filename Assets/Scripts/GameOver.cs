@@ -10,17 +10,19 @@ public class GameOver : MonoBehaviour
     public TMP_Text m_scoreText;
     public TMP_Text m_inputText;
     public string m_name;
-    ScoreManager m_scoreManager;
+    public ScoreManager m_scoreManager;
     Inventory m_inventory;
 
     public GameObject m_player;
     public GameObject m_scoreM;
 
-
-    private void Awake()
+    private void Start()
     {
-        //m_scoreManager = m_scoreM.GetComponent<ScoreManager>();
         m_inventory = m_player.GetComponent<Inventory>();
+
+        //m_scoreManager = m_scoreM.GetComponent<ScoreManager>();
+
+        //m_scoreText.text = "Your score is " + m_inventory.m_score;
     }
 
     public void GameOverScreen()
@@ -33,7 +35,10 @@ public class GameOver : MonoBehaviour
     {
         m_name = m_inputText.text;
         m_scoreManager.AddScore(new Score(m_name, m_inventory.m_score));
+    }
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }

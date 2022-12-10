@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class GameplayTimer : MonoBehaviour
 {
-    [HideInInspector] public float m_arcadeTime = 60;
+    public float m_arcadeTime = 60;
     [HideInInspector] public float m_timedTime = 300;
     public TMP_Text m_textCounter;
 
-    public GameOver m_gameOver;
+    GameOver m_gameOver;
 
     private void Awake()
     {

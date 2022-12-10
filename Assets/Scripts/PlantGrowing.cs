@@ -159,7 +159,7 @@ public class PlantGrowing : MonoBehaviour
 
         if (m_growthStages[2].activeInHierarchy)
         {
-            if(Input.GetKey(KeyCode.Return) && collision.CompareTag("Player") && m_inventoryHotbar.m_inventoryNoSelected == 4)
+            if(Input.GetKey(KeyCode.Space) && collision.CompareTag("Player") && m_inventoryHotbar.m_inventoryNoSelected == 4)
             {
                 m_growthStages[2].SetActive(false);
                 m_inventory.m_cropCount++;
@@ -169,7 +169,7 @@ public class PlantGrowing : MonoBehaviour
         
         if (m_plantWilting.m_isWilted && m_inventoryHotbar.m_inventoryNoSelected == 3)
         {
-            if (Input.GetKey(KeyCode.Return) && collision.CompareTag("Player"))
+            if (Input.GetKey(KeyCode.Space) && collision.CompareTag("Player"))
             {
                 m_plantWilting.PlantWatered();
 
