@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Shop
+  - Land
+  - ScoreManager
   layers:
   - Default
   - TransparentFX
@@ -39,6 +41,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 2566075545
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
@@ -47,4 +52,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 2708528201
+    locked: 0
+  - name: Shops
+    uniqueID: 793557799
     locked: 0
