@@ -10,7 +10,7 @@ public class ScoreManager : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(transform.root);
+        //DontDestroyOnLoad(transform.root);
 
         var json = PlayerPrefs.GetString("scores", "{}");
         m_scores = JsonUtility.FromJson<ScoreData>(json);
